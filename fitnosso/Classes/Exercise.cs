@@ -8,12 +8,14 @@ namespace fitnosso
         // An exercise is a user-defined objects outlining an exercise that as performed
         public string ExerciseType;
         public string Description;
-        public Exercise DefaultExercise
+        public static Exercise DefaultExercise
         {
             get
             {
-
+                Exercise t_ex = new  Exercise("default", "default");
+                return t_ex;
             }
+
         }
         public Exercise(string p_eType, string p_eDesc)
         {
