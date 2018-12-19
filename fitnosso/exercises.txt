@@ -1,0 +1,7 @@
+﻿eliptical
+treadmill
+run
+bike
+spin
+step
+cardio
