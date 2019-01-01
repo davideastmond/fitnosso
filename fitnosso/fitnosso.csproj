@@ -82,6 +82,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="Toast">
+      <HintPath>..\packages\Toast.iOS.1.2.0\lib\xamarinios10\Toast.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
@@ -90,14 +93,17 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Classes\" />
+    <Folder Include="Protocols\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
     <InterfaceDefinition Include="Main.storyboard" />
+    <InterfaceDefinition Include="setupViewController.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -110,6 +116,15 @@
     <Compile Include="Classes\LogEntry.cs" />
     <Compile Include="Classes\Exercise.cs" />
     <Compile Include="Classes\FitnessJournal.cs" />
+    <Compile Include="setupViewController.cs" />
+    <Compile Include="setupViewController.designer.cs">
+      <DependentUpon>setupViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Protocols\UserRegistrationResultProtocol.cs" />
+    <Compile Include="Protocols\PickerViewModel.cs" />
+    <Compile Include="Classes\ListPopulator.cs" />
+    <Compile Include="Classes\MetricConverter.cs" />
+    <Compile Include="Classes\JournalController.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="exercises.txt" />

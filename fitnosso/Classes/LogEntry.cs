@@ -12,6 +12,7 @@ namespace fitnosso
         public DateTime EntryDate;
 
     }
+    [Serializable]
     public class FoodLogEntry : LogEntry
     {
         // This is an entry that describes consuming calories and protein
@@ -24,6 +25,7 @@ namespace fitnosso
             ProteinConsumedInGrams = forProteinConsumed;
         }
     }
+    [Serializable]
     public class ExerciseLogEntry : LogEntry
     {
         public int Duration; // Duration of the exercise

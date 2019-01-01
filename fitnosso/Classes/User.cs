@@ -19,17 +19,28 @@ namespace fitnosso
                 return DOB;
             }
         }
-        public Sex SexGender;
-        public int Height_in_cm;
-        public int Weight_in_kilos;
-        public User(string pName, Sex pSex, DateTime pDOB, int pHeightCentimeters, int pWeightInKilos)
+        public Sex SexGender
+        {
+            get; set;
+        }
+
+        // This just keeps track of the Users height and weight. It will auto-calculate
+        public double MetricHeight;
+        public double MetricWeight;
+        public double ImperialHeight;
+        public double ImperialWeight;
+
+        // Keeps track of the preferred primary units of measurement
+        public UnitsMode Pref_HeightMeasurementUnit;
+        public UnitsMode Pref_WeightMeasurementUnit;
+
+
+        public User(string pName, Sex pSex, DateTime pDOB)
         {
             // Constructor - create the user profile
             DOB = pDOB;
             Name = pName;
-            SexGender = pSex;
-            Height_in_cm = pHeightCentimeters;
-            Weight_in_kilos = pWeightInKilos;
+            SexGender = pSex;      
         }
     }
 }
