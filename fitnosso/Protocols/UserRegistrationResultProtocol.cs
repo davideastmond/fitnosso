@@ -29,7 +29,6 @@ namespace fitnosso
     }
     public struct RegistrationReturnData
     {
-        public DateTime DateOfBirth;
-        public string Name;
+        public bool Successful;
     }
 }

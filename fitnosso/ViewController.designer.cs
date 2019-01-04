@@ -13,8 +13,43 @@ namespace fitnosso
     [Register ("ViewController")]
     partial class ViewController
     {
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIBarButtonItem btn_date_backward { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIBarButtonItem btn_date_forward { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIBarButtonItem btn_new_log { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel navDateLabel { get; set; }
+
         void ReleaseDesignerOutlets ()
         {
+            if (btn_date_backward != null) {
+                btn_date_backward.Dispose ();
+                btn_date_backward = null;
+            }
+
+            if (btn_date_forward != null) {
+                btn_date_forward.Dispose ();
+                btn_date_forward = null;
+            }
+
+            if (btn_new_log != null) {
+                btn_new_log.Dispose ();
+                btn_new_log = null;
+            }
+
+            if (navDateLabel != null) {
+                navDateLabel.Dispose ();
+                navDateLabel = null;
+            }
         }
     }
 }

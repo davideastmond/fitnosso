@@ -21,10 +21,46 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="10524" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="10525">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="10525" id="10526">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                     </view>
-                    <navigationItem key="navigationItem" id="XdS-96-SXx"/>
+                    <navigationItem key="navigationItem" id="XdS-96-SXx">
+                        <label key="titleView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9623" translatesAutoresizingMaskIntoConstraints="NO">
+                            <rect key="frame" x="0.0" y="0.0" width="215" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <barButtonItem key="rightBarButtonItem" title="New Log" id="10073"/>
+                        <leftBarButtonItems>
+                            <barButtonItem title="&lt;" id="10072"/>
+                            <barButtonItem title="&gt;" id="10074">
+                                <connections/>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <segue destination="eI4-wU-5rB" kind="show" identifier="showSetupJournal" id="QGO-rn-fro"/>
+                        <outlet property="navDateLabel" destination="9623" id="name-outlet-9623"/>
+                        <outlet property="btn_date_forward" destination="10074" id="name-outlet-10074"/>
+                        <outlet property="btn_date_backward" destination="10072" id="name-outlet-10072"/>
+                        <outlet property="btn_new_log" destination="10073" id="name-outlet-10073"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

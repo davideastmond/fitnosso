@@ -125,6 +125,7 @@
     <Compile Include="Classes\ListPopulator.cs" />
     <Compile Include="Classes\MetricConverter.cs" />
     <Compile Include="Classes\JournalController.cs" />
+    <Compile Include="Classes\RandomString.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="exercises.txt" />

@@ -66,6 +66,28 @@ namespace fitnosso
             }
 
         }
+        public static LogEntry GetEntryByID(string IDno)
+        {
+            /* Retrieves a single log entry by the unique ID provided. Returns null if no entry found
+            */
+            FitnessJournal pulledEntry = Pull();
+            // Ensure it's not null
+
+            // Ensure IDNo parameter is all uppper case
+            IDno = IDno.ToUpper();
+            if (pulledEntry != null)
+            {
+                foreach (LogEntry j in pulledEntry.Logs)
+                {
+                    
+                    if (j.EntryID == IDno)
+                    {
+                        return j; // return the matching ID
+                    }
+                }
+            }
+            return null;
+        }
         public static void Reset()
         {
             // Deletes / resets the journal

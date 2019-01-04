@@ -5,14 +5,17 @@ using System.Linq;
 
 namespace fitnosso
 {
-    public struct EmperialHeight
+    public struct ImperialHeight
     {
         public int Feet;
         public int Inches;
 
-        public string GetHeightString()
+        public string StringRepresentation
         {
-            return Feet.ToString() + "'" + Inches + "\"";
+            get
+            {
+                return Feet.ToString() + "'" + Inches + "\"";
+            }
         }
     }
     public static class MetricConverter
@@ -32,34 +35,34 @@ namespace fitnosso
             double finalValue = centimeters / 2.54f;
             return Math.Round(finalValue, 2);
         }
-        public static EmperialHeight ToEmperialHeightFromCentimeters(double centimeters)
+        public static ImperialHeight ToEmperialHeightFromCentimeters(double centimeters)
         {
             // Converts to ft-inches format
             // First get the inches from the centimeters
 
             double getInches = MetricConverter.ToInches(centimeters);
-            EmperialHeight finalValue;
+            ImperialHeight finalValue;
             finalValue.Feet = (int)(getInches / 12);
             finalValue.Inches = (int)(getInches % 12);
             return finalValue;
 
         }
 
-        public static EmperialHeight ToEmperialHeightFromInches(double inches)
+        public static ImperialHeight ToEmperialHeightFromInches(double inches)
         {
-            EmperialHeight finalValue;
+            ImperialHeight finalValue;
             finalValue.Feet = (int)(inches / 12);
             finalValue.Inches = (int)(inches % 12);
             return finalValue;
         }
         public static double ToKilosFromPounds (double fromPounds)
         {
-            double finalValue = fromPounds * 2.205f;
+            double finalValue = fromPounds / 2.205f;
             return Math.Round(finalValue, 2);
         }
         public static double ToPoundsFromKilos(double fromKilos)
         {
-            double finalValue = fromKilos / 2.205f;
+            double finalValue = fromKilos * 2.205f;
             return Math.Round(finalValue, 2);
         }
         public static List<double> ConvertListOfHeightsFromCentimetersToInches(List<double> objKind)

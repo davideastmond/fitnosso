@@ -162,6 +162,11 @@ namespace fitnosso
             FitnessJournal journalObject = new FitnessJournal(NewJournalUser);
             JournalController.Save(journalObject);
             // Serialize and write to file
+
+            // Send a message via the delegate
+            RegistrationReturnData returndata;
+            returndata.Successful = true;
+            this.delegate_data.RaiseEvent(this, returndata);
         }
 
         private void populateDefaultTextBox()
