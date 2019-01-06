@@ -50,11 +50,11 @@ namespace fitnosso
             {
                 if (this.SexGender == Sex.Male || this.SexGender == Sex.Other)
                 {
-                    double bmr_male_return_other = (this._metricHeight * 6.25) + (_metricWeight * 9.99) - (Age * 4.92) + BMR_Gender_value_Male;
+                    double bmr_male_return_other = (this.MetricHeight * 6.25) + (MetricWeight * 9.99) - (Age * 4.92) + BMR_Gender_value_Male;
                     return Math.Round(bmr_male_return_other, 2);
                 } else
                 {
-                    double bmr_female_return = (this._metricHeight * 6.25) + (_metricWeight * 9.99) - (Age * 4.92) + BMR_Gender_value_Female;
+                    double bmr_female_return = (this.MetricHeight * 6.25) + (MetricWeight * 9.99) - (Age * 4.92) + BMR_Gender_value_Female;
                     return Math.Round(bmr_female_return, 2);
                 }
             }
@@ -64,68 +64,43 @@ namespace fitnosso
         {
             get
             {
-                return MetricConverter.ToEmperialHeightFromInches(_IHeight);
+                return MetricConverter.ToEmperialHeightFromInches(ImperialHeight);
             }
         }
         // This just keeps track of the Users height and weight. It will auto-calculate
-        private double _metricHeight;
-        private double _metricWeight;
-        private double _IHeight;
-        private double _IWeight;
-        
+        private double _MetricHeight, _MetricWeight, _ImperialHeight, _ImperialWeight;
+
         public double MetricHeight
         {
             get
             {
-                // Auto calculate the imperial
-                _IHeight = MetricConverter.ToInches(_metricHeight);
-                return _metricHeight;
-              
-            }
-            set
-            {
-                _metricHeight = value;
+                return _MetricHeight;
             }
         }
         public double MetricWeight
         {
-            set
-            {
-                _metricWeight = value;
-            }
             get
             {
-
-                _IWeight = MetricConverter.ToPoundsFromKilos(_metricWeight);
-                return _metricWeight;
+                return _MetricWeight;
             }
         }
-
 
         public double ImperialHeight
         {
             get
             {
-                _metricHeight = MetricConverter.ToCentimeters(_IHeight);
-                return _IHeight;
-            }
-            set
-            {
-                _IHeight = value;
+                return _ImperialHeight;
             }
         }
+
         public double ImperialWeight
         {
             get
             {
-                _metricWeight = MetricConverter.ToKilosFromPounds(_IWeight);
-                return _IWeight;
-            }
-            set
-            {
-                _IWeight = value;
+                return _ImperialWeight;
             }
         }
+
 
         // Keeps track of the preferred primary units of measurement
         public UnitsMode Pref_HeightMeasurementUnit;
@@ -140,21 +115,28 @@ namespace fitnosso
             SexGender = pSex;
             _UserID = RandomString.Generate();    
         }
-        public void SetMetricMeasurements(double mHeight, double mWeight)
-        {
-            // Helper method to set the heights and weights
-            _metricWeight = mWeight;
-            _metricHeight = mHeight;
-            _IHeight = MetricConverter.ToInches(mHeight);
-            _IWeight = MetricConverter.ToPoundsFromKilos(mWeight);
-        }
-        public void SetImperialMeasurements(double iHeight, double iWeight)
-        {
-            _IHeight = iHeight;
-            _IWeight = iWeight;
-            _metricHeight = MetricConverter.ToCentimeters(iHeight);
-            _metricWeight = MetricConverter.ToKilosFromPounds(iWeight);
 
+        public void SetMetricWeight (double value)
+        {
+            _MetricWeight = value;
+            // Convert
+            _ImperialWeight = MetricConverter.ToPoundsFromKilos(value);
+
+        }
+        public void SetMetricHeight (double value)
+        {
+            _MetricHeight = value;
+            _ImperialHeight = MetricConverter.ToInches(value);
+        }
+        public void SetImperialWeight (double value)
+        {
+            _ImperialWeight = value;
+            _MetricWeight = MetricConverter.ToKilosFromPounds(value);
+        }
+        public void SetImperialHeight (double value)
+        {
+            _ImperialHeight = value;
+            _MetricHeight = MetricConverter.ToCentimeters(value);
         }
     }
 }

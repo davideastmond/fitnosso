@@ -14,11 +14,18 @@ namespace fitnosso
     public partial class setupViewController : UIViewController
     {
         public UserRegistrationResultProtocol delegate_data = new UserRegistrationResultProtocol();
+        ListPopulator pop = new ListPopulator();
+        List<double> Metric_Heights; // Heights in centimeters
+        List<double> Imperial_Heights;
 
+        List<double> Metric_Weights;
+        List<double> Imperial_Weights;
         public setupViewController (IntPtr handle) : base (handle)
         {
-
-
+            Metric_Heights = pop.ReturnIntegersInRange(150, 220); // Heights in centimeters
+            Imperial_Heights = pop.ReturnIntegersInRange(60, 86);
+            Metric_Weights = pop.ReturnIntegersInRange(22, 200);
+            Imperial_Weights = pop.ReturnIntegersInRange(60, 450);
         }
 
         public override void ViewDidLoad()
@@ -28,9 +35,7 @@ namespace fitnosso
             // We need to populate the PickerViews with heights and weights in metric and imperial measurements
 
             // Let's do the heights
-            ListPopulator pop = new ListPopulator();
-            List<double> Metric_Heights = pop.ReturnIntegersInRange(150, 220); // Heights in centimeters
-            List<double> Imperial_Heights = pop.ReturnIntegersInRange(60, 86);
+
             // Get a model for the heights
             RegistrationStatusPickerViewModel<double> modelHeights = new RegistrationStatusPickerViewModel<double>(Metric_Heights);
             modelHeights.FontFromName = "HelveticaNeue";
@@ -46,11 +51,11 @@ namespace fitnosso
             pickerViewGender.Model = modelGenders;
 
             // Get a model for the weights
-            List<double> Metric_Weights = pop.ReturnIntegersInRange(22, 200);
-            List<double> Imperial_Weights = pop.ReturnIntegersInRange(60, 450);
+
             RegistrationStatusPickerViewModel<double> modelweights = new RegistrationStatusPickerViewModel<double>(Metric_Weights);
             modelweights.AlternateItems = Imperial_Weights;
             modelweights.FontFromName = "HelveticaNeue";
+            modelweights.MeasurementUnits = UnitsMode.Metric;
             pickerViewWeight.Model = modelweights;
         }
         private List<Sex> GetSexes()
@@ -73,7 +78,8 @@ namespace fitnosso
                 heightsModel.MeasurementUnits = UnitsMode.Imperial;
                 pickerView_Height.Model = heightsModel;
                 pickerView_Height.ReloadComponent(0);
-               
+                pickerViewWeight.ReloadAllComponents();
+
             }
             
             else
@@ -84,7 +90,7 @@ namespace fitnosso
                 heightsModel.MeasurementUnits = UnitsMode.Metric;
                 pickerView_Height.Model = heightsModel;
                 pickerView_Height.ReloadComponent(0);
-               
+                pickerViewWeight.ReloadAllComponents();
             }
             
 
@@ -100,6 +106,7 @@ namespace fitnosso
                 weightsModel.MeasurementUnits = UnitsMode.Imperial;
                 pickerViewWeight.Model = weightsModel;
                 pickerViewWeight.ReloadComponent(0);
+                pickerViewWeight.ReloadAllComponents();
 
             }
             else
@@ -109,7 +116,8 @@ namespace fitnosso
                 weightsModel.MeasurementUnits = UnitsMode.Metric;
                 pickerViewWeight.Model = weightsModel;
                 pickerViewWeight.ReloadComponent(0);
-               
+                pickerViewWeight.ReloadAllComponents();
+
 
             }
         }
@@ -143,21 +151,35 @@ namespace fitnosso
 
             if (sw_height.On)
             {
-                // Imperial units will be captured and metric units will automatically be computed
-                double selectedHeight_Imperial = pickerView_Height.SelectedRowInComponent(0); // Capture the measurement
-                NewJournalUser.Pref_HeightMeasurementUnit = UnitsMode.Imperial; // Set the preference
-                NewJournalUser.ImperialHeight = (double)selectedHeight_Imperial;
-                NewJournalUser.MetricHeight = MetricConverter.ToCentimeters(NewJournalUser.ImperialHeight); // Set the metric conversion
+
+                double selectedHeight_Imperial = Imperial_Heights[(int) pickerView_Height.SelectedRowInComponent(0)];
+                 // Capture the measurement
+
+                NewJournalUser.SetImperialHeight(selectedHeight_Imperial); // Set the preference
+                NewJournalUser.Pref_HeightMeasurementUnit = UnitsMode.Imperial;
+
             }
             else
             {
                 // If it's off, metric units will be captured
-                double selected_height_Metric = pickerView_Height.SelectedRowInComponent(0); // Capture the metric units
-                NewJournalUser.Pref_HeightMeasurementUnit = UnitsMode.Metric; // Set preference
-                NewJournalUser.MetricHeight = (double)selected_height_Metric;
-                NewJournalUser.ImperialHeight = MetricConverter.ToInches(NewJournalUser.MetricHeight);
+                double selected_height_Metric = Metric_Heights[(int) pickerView_Height.SelectedRowInComponent(0)]; // Capture the metric units
+                NewJournalUser.SetMetricHeight(selected_height_Metric);
+                NewJournalUser.Pref_HeightMeasurementUnit = UnitsMode.Metric;
+               
             }
 
+            if (sw_weight.On)
+            {
+                double SWI = Imperial_Weights[(int)  pickerViewWeight.SelectedRowInComponent(0)];
+                
+                NewJournalUser.SetImperialWeight(SWI);
+                NewJournalUser.Pref_WeightMeasurementUnit = UnitsMode.Imperial;
+            } else
+            {
+                double SWI = Metric_Weights[(int) pickerViewWeight.SelectedRowInComponent(0)];
+                NewJournalUser.SetMetricWeight(SWI);
+                NewJournalUser.Pref_WeightMeasurementUnit = UnitsMode.Metric;
+            }
             // Create a journal object
             FitnessJournal journalObject = new FitnessJournal(NewJournalUser);
             JournalController.Save(journalObject);

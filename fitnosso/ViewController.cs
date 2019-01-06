@@ -19,8 +19,8 @@ namespace fitnosso
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            Test();
-            //JournalController.Reset();
+            //Test();
+            JournalController.Reset();
             // Perform any additional setup after loading the view, typically from a nib.
 
             // Application launches - check if a serialized journal file exists - if not, segue to a registration screen
@@ -99,7 +99,9 @@ namespace fitnosso
         {
             //ExerciseLogEntry mEntry = new ExerciseLogEntry(DateTime.Now, 0, 0, new Exercise("x", "y"));
             User myUser = new User("David", Sex.Male, new DateTime(1981, 10, 15));
-            myUser.SetMetricMeasurements(175, 83);
+            myUser.SetMetricHeight(175);
+            myUser.SetMetricWeight(83);
+           
         }
     }
 

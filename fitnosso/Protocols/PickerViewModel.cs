@@ -50,7 +50,7 @@ namespace fitnosso
         public ListPickerViewModel(List<TItem> p_Items)
         {
             MetricItems = p_Items;
-
+            MeasurementUnits = UnitsMode.Metric;
 
         }
 
@@ -65,8 +65,16 @@ namespace fitnosso
             {
                 return 1;
             }
-            return MetricItems.Count;
+            if (MeasurementUnits == UnitsMode.Metric)
+            {
+                return MetricItems.Count;
+            }
+            else
+            {
+                return AlternateItems.Count;
+            }
         }
+        
         public override string GetTitle(UIPickerView pickerView, nint row, nint component)
         {
             if (NoItem((int)row))
