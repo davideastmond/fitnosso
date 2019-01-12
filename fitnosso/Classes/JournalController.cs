@@ -67,6 +67,25 @@ namespace fitnosso
             }
 
         }
+        public static List<LogEntry> GetAllEntriesByDate (DateTime d1)
+        {
+            /* This returns all the entries that have the EntryDate = d1*/
+            List<LogEntry> returnList = new List<LogEntry>();
+
+            // Pull a recent copy of the journal
+            FitnessJournal J = Pull();
+
+            // Cycle through the log entry and add those w/ matching dates to return list
+            foreach (LogEntry log in J.Logs)
+            {
+                if (log.EntryDate.Day == d1.Day && log.EntryDate.Month == d1.Month && log.EntryDate.Year == d1.Year)
+                {
+                    returnList.Add(log);
+                }
+
+            }
+            return returnList;
+        }
         public static LogEntry GetEntryByID(string IDno)
         {
             /* Retrieves a single log entry by the unique ID provided. Returns null if no entry found
@@ -102,16 +121,15 @@ namespace fitnosso
             // A Test Function that generates #count of random log entries
             List<LogEntry> returnList = new List<LogEntry>();
             Random rndGenerator = new Random(DateTime.Now.Millisecond); // New random and seed
-
+            DateTime d1 = new DateTime(2018, 12, 20);
+            DateTime d2 = new DateTime(2018, 12, 31);
 
             for (int i = 0 ; i <= count; i++)
             {
                 // Randomly select between a Food or Ex log
                 int log_type = rndGenerator.Next(0, 2);
-                int rndDay, rndMonth = 0;
-                rndDay = rndGenerator.Next(1, 29);
-                rndMonth = rndGenerator.Next(1, 13);
-                DateTime newTestTime = new DateTime(2018, rndMonth, rndDay);
+
+                DateTime newTestTime = ExtensionMethods.GetRandomDateInRange(d1, d2);
 
                 if (log_type == 0)
                 {
