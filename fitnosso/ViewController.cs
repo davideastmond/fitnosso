@@ -4,6 +4,7 @@ using UIKit;
 using System.Reflection;
 using System.Threading.Tasks;
 using Foundation;
+using System.Collections.Generic;
 
 namespace fitnosso
 {
@@ -20,7 +21,8 @@ namespace fitnosso
         {
             base.ViewDidLoad();
             //Test();
-            JournalController.Reset();
+            Test2();
+            //JournalController.Reset();
             // Perform any additional setup after loading the view, typically from a nib.
 
             // Application launches - check if a serialized journal file exists - if not, segue to a registration screen
@@ -36,12 +38,14 @@ namespace fitnosso
                 // Deserialize and pass information
 
                 // Set the label to display the time
-                
+
                 navDateLabel.Text = DateTimeSetting.ToString("MMM d, yyyy");
                 FitnessJournal dJ = JournalController.Pull();
 
             }
-
+            List<LogEntry> testList = JournalController.TestReturnListOfRandomLogEntries(11);
+            TableViewSourceModel model = new TableViewSourceModel(testList);
+            logEntryTable.Source = model;
         }
 
         public override void DidReceiveMemoryWarning()
@@ -97,11 +101,29 @@ namespace fitnosso
         }
         void Test()
         {
-            //ExerciseLogEntry mEntry = new ExerciseLogEntry(DateTime.Now, 0, 0, new Exercise("x", "y"));
-            User myUser = new User("David", Sex.Male, new DateTime(1981, 10, 15));
-            myUser.SetMetricHeight(175);
-            myUser.SetMetricWeight(83);
-           
+            List<LogEntry> myList = JournalController.TestReturnListOfRandomLogEntries(10);
+
+        }
+        void Test2()
+        {
+            DateTime d1 = new DateTime(2018, 1, 1);
+            DateTime d2 = new DateTime(2018, 12, 31);
+            for (int i = 0; i <= 10; i++)
+            {
+                DateTime myDate = ExtensionMethods.GetRandomDateInRange2(d1, d2);
+                Console.WriteLine(myDate);
+
+            }
+        }
+
+        partial void date_forward_tap(UIBarButtonItem sender)
+        {
+            ScrollDate(1); // Scroll date forward
+        }
+
+        partial void date_backward_tap(UIBarButtonItem sender)
+        {
+            ScrollDate(-1); // Scroll date backward
         }
     }
 

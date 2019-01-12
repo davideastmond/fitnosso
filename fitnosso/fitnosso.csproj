@@ -126,6 +126,12 @@
     <Compile Include="Classes\MetricConverter.cs" />
     <Compile Include="Classes\JournalController.cs" />
     <Compile Include="Classes\RandomString.cs" />
+    <Compile Include="Protocols\TableViewModel.cs" />
+    <Compile Include="LogEntryViewCell.cs" />
+    <Compile Include="LogEntryViewCell.designer.cs">
+      <DependentUpon>LogEntryViewCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\ExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="exercises.txt" />

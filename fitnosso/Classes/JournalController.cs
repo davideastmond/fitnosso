@@ -2,6 +2,7 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.IO;
+using System.Collections.Generic;
 
 namespace fitnosso
 {
@@ -93,10 +94,41 @@ namespace fitnosso
             // Deletes / resets the journal
             if (File.Exists(DataFiles.journalDataFile))
             {
-                File.Delete(DataFiles.journalDataFile)
-;            }
+                File.Delete(DataFiles.journalDataFile);
+          }
         }
+        public static List<LogEntry> TestReturnListOfRandomLogEntries(int count)
+        {
+            // A Test Function that generates #count of random log entries
+            List<LogEntry> returnList = new List<LogEntry>();
+            Random rndGenerator = new Random(DateTime.Now.Millisecond); // New random and seed
 
+
+            for (int i = 0 ; i <= count; i++)
+            {
+                // Randomly select between a Food or Ex log
+                int log_type = rndGenerator.Next(0, 2);
+                int rndDay, rndMonth = 0;
+                rndDay = rndGenerator.Next(1, 29);
+                rndMonth = rndGenerator.Next(1, 13);
+                DateTime newTestTime = new DateTime(2018, rndMonth, rndDay);
+
+                if (log_type == 0)
+                {
+                    // Food Log
+                    FoodLogEntry fl = new FoodLogEntry(newTestTime, rndGenerator.Next(100, 500), rndGenerator.Next(0, 35));
+                    returnList.Add(fl);
+                }
+                else
+                {
+                    // Exercise Log
+                    // Food Log
+                    ExerciseLogEntry el = new ExerciseLogEntry(newTestTime, rndGenerator.Next(15, 31), rndGenerator.Next(50, 501), Exercise.DefaultExercise);
+                    returnList.Add(el);
+                }
+            }
+            return returnList;
+        }
 
     }
 }

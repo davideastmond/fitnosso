@@ -27,7 +27,19 @@ namespace fitnosso
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITableView logEntryTable { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel navDateLabel { get; set; }
+
+        [Action ("date_backward_tap:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void date_backward_tap (UIKit.UIBarButtonItem sender);
+
+        [Action ("date_forward_tap:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void date_forward_tap (UIKit.UIBarButtonItem sender);
 
         void ReleaseDesignerOutlets ()
         {
@@ -44,6 +56,11 @@ namespace fitnosso
             if (btn_new_log != null) {
                 btn_new_log.Dispose ();
                 btn_new_log = null;
+            }
+
+            if (logEntryTable != null) {
+                logEntryTable.Dispose ();
+                logEntryTable = null;
             }
 
             if (navDateLabel != null) {
