@@ -156,22 +156,31 @@ namespace fitnosso
 
         partial void date_forward_tap(UIBarButtonItem sender)
         {
-            ScrollDate(1); // Scroll date forward
-            JournalController.GetAllEntriesByDate(DateTimeSetting);
-            // JournalController.FilteredLogs.Print();
-            TableViewSourceModel model = new TableViewSourceModel(JournalController.FilteredLogs);
-            logEntryTable.Source = model;
-            logEntryTable.ReloadData();
+            // Only do this is if a valid journal is open
+
+            if (JournalController.CurrentJournal != null)
+            {
+                ScrollDate(1); // Scroll date forward
+                JournalController.GetAllEntriesByDate(DateTimeSetting);
+                // JournalController.FilteredLogs.Print();
+                TableViewSourceModel model = new TableViewSourceModel(JournalController.FilteredLogs);
+                logEntryTable.Source = model;
+                logEntryTable.ReloadData();
+            }
+
         }
 
         partial void date_backward_tap(UIBarButtonItem sender)
         {
-            ScrollDate(-1); // Scroll date backward
-            JournalController.GetAllEntriesByDate(DateTimeSetting);
-            // JournalController.FilteredLogs.Print();
-            TableViewSourceModel model = new TableViewSourceModel(JournalController.FilteredLogs);
-            logEntryTable.Source = model;
-            logEntryTable.ReloadData();
+            if (JournalController.CurrentJournal != null)
+            {
+                ScrollDate(-1); // Scroll date backward
+                JournalController.GetAllEntriesByDate(DateTimeSetting);
+                // JournalController.FilteredLogs.Print();
+                TableViewSourceModel model = new TableViewSourceModel(JournalController.FilteredLogs);
+                logEntryTable.Source = model;
+                logEntryTable.ReloadData();
+            }
            
         }
     }
