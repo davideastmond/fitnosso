@@ -27,11 +27,23 @@ namespace fitnosso
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIBarButtonItem btnShowProfile { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton cmdCreateNewJournal { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITableView logEntryTable { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel navDateLabel { get; set; }
+
+        [Action ("btnCreateNewJournalTap:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void btnCreateNewJournalTap (UIKit.UIButton sender);
 
         [Action ("date_backward_tap:")]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -56,6 +68,16 @@ namespace fitnosso
             if (btn_new_log != null) {
                 btn_new_log.Dispose ();
                 btn_new_log = null;
+            }
+
+            if (btnShowProfile != null) {
+                btnShowProfile.Dispose ();
+                btnShowProfile = null;
+            }
+
+            if (cmdCreateNewJournal != null) {
+                cmdCreateNewJournal.Dispose ();
+                cmdCreateNewJournal = null;
             }
 
             if (logEntryTable != null) {

@@ -7,39 +7,8 @@ namespace fitnosso
    public static class ExtensionMethods
     {
         static Random pickRandom = new Random(DateTime.Now.Millisecond);
+
         public static DateTime GetRandomDateInRange(DateTime date1, DateTime date2)
-        {
-            // Extenson method that returns a random date between date1 and date2
-            List<DateTime> returnList = new List<DateTime>();
-
-            // Make sure that date2 is later in time than date1
-
-            if (DateTime.Compare(date1, date2) < 0)
-            {
-                int adddays = 0;
-                DateTime tDate = date1;
-                while (true)
-                {
-                    DateTime newDate = date1.AddDays(adddays);
-                    adddays++;
-                    returnList.Add(newDate);
-
-                    if (DateTime.Compare(newDate, date2) > 0)
-                    {
-                        break;
-                    }
-
-                }
-                // Pick an entry
-                int finalPick = pickRandom.Next(0, returnList.Count);
-                return returnList[finalPick];
-            }
-            else
-            {
-                throw new ArgumentException("Date1 must be earlier than date2");
-            }
-        }
-        public static DateTime GetRandomDateInRange2(DateTime date1, DateTime date2)
         {
             if (DateTime.Compare(date1, date2) < 0)
             {
@@ -64,6 +33,20 @@ namespace fitnosso
             else
             {
                 throw new ArgumentException();
+            }
+        }
+        public static void Print<T>(this ICollection<T> obj) where T : LogEntry
+        {
+            // prints the contents of an erray
+            if (obj.Count > 0)
+            {
+
+                for (int i = 0; i < obj.Count; i++)
+                {
+                    // LogEntry temp = obj.ElementAt(i) as LogEntry;
+                    Console.WriteLine(obj.ElementAt(i).EntryDate + " " + obj.ElementAt(i).EntryID);
+                    
+                }
             }
         }
     }

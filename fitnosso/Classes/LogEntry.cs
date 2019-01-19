@@ -34,6 +34,7 @@ namespace fitnosso
         // This is an entry that describes consuming calories and protein
         public int cKalsEaten;
         public int ProteinConsumedInGrams;
+        public string FoodEatenDescription = "default food";
         public FoodLogEntry(DateTime forDate, int forcKalsEaten, int forProteinConsumed) : base()
         {
             EntryDate = forDate;

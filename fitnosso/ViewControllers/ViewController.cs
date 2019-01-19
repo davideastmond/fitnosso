@@ -12,6 +12,7 @@ namespace fitnosso
     public partial class ViewController : UIViewController
     {
         DateTime DateTimeSetting = DateTime.Now;
+      
         protected ViewController(IntPtr handle) : base(handle)
         {
             // Note: this .ctor should not contain any initialization logic.
@@ -20,8 +21,7 @@ namespace fitnosso
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            //Test();
-            Test2();
+
             //JournalController.Reset();
             // Perform any additional setup after loading the view, typically from a nib.
 
@@ -32,6 +32,7 @@ namespace fitnosso
             {
                 // Segue to a registration screen
                 // Create a delegate object
+
                 this.PerformSegue("showSetupJournal", this);
             } else
             {
@@ -40,14 +41,27 @@ namespace fitnosso
                 // Set the label to display the time
 
                 navDateLabel.Text = DateTimeSetting.ToString("MMM d, yyyy");
-                FitnessJournal dJ = JournalController.Pull();
+                JournalController.Pull();
 
             }
-            List<LogEntry> testList = JournalController.TestReturnListOfRandomLogEntries(11);
-            TableViewSourceModel model = new TableViewSourceModel(testList);
-            logEntryTable.Source = model;
+
+            // We have to check if the CurrentJournal is null after it has been pulled. If it is, that  means there was something wrong
+            // and we have to re-create a journal
+
+            if (JournalController.CurrentJournal == null)
+            {
+                this.PerformSegue("showSetupJournal", this);
+            }
+            else
+            {
+                JournalController.TestReturnListOfRandomLogEntries(12);
+                JournalController.Save();
+                TableViewSourceModel model = new TableViewSourceModel(JournalController.FilteredLogs);
+                logEntryTable.Source = model;
+            }
         }
 
+       
         public override void DidReceiveMemoryWarning()
         {
             base.DidReceiveMemoryWarning();
@@ -62,10 +76,44 @@ namespace fitnosso
             {
                 setupViewController setScreen = segue.DestinationViewController as setupViewController; // Create a new instance of the setup screen
                 setScreen.delegate_data.OnReceivedRegistrationData += Delegate_Data_OnReceivedRegistrationData;
-
             }
         }
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
 
+            if (!JournalController.IsValidJournal)
+            {
+                Console.WriteLine("Please create a new Journal");
+                logEntryTable.Hidden = true;
+                cmdCreateNewJournal.Hidden = false;
+                btn_new_log.Enabled = false;
+                btnShowProfile.Enabled = false;
+                btn_date_forward.Enabled = false;
+                btn_date_backward.Enabled = false;
+            }
+            else
+            {
+
+
+                logEntryTable.Hidden = false;
+                cmdCreateNewJournal.Hidden = true;
+                btn_new_log.Enabled = true;
+                btnShowProfile.Enabled = true;
+                btn_date_forward.Enabled = true;
+                btn_date_backward.Enabled = true;
+            }
+
+        }
+
+        partial void btnCreateNewJournalTap(UIButton sender)
+        {
+            if (!JournalController.IsValidJournal)
+            {
+                // bring up the new journal setup screen
+                this.PerformSegue("showSetupJournal", this);
+            }
+        }
 
         void Delegate_Data_OnReceivedRegistrationData(object sender, RegistrationReturnData data)
         {
@@ -73,9 +121,13 @@ namespace fitnosso
            if (data.Successful)
             {
                 Console.WriteLine("Registration was successful. Load the database");
+                // Refresh and pull
+                JournalController.Pull();
                 // pop
                 this.NavigationController.PopViewController(true);
                 GlobalToast.Toast.ShowToast("Journal Created");
+
+
 
             }
         }
@@ -99,31 +151,28 @@ namespace fitnosso
                     return;
             }
         }
-        void Test()
-        {
-            List<LogEntry> myList = JournalController.TestReturnListOfRandomLogEntries(10);
 
-        }
-        void Test2()
-        {
-            DateTime d1 = new DateTime(2018, 1, 1);
-            DateTime d2 = new DateTime(2018, 12, 31);
-            for (int i = 0; i <= 10; i++)
-            {
-                DateTime myDate = ExtensionMethods.GetRandomDateInRange2(d1, d2);
-                Console.WriteLine(myDate);
 
-            }
-        }
 
         partial void date_forward_tap(UIBarButtonItem sender)
         {
             ScrollDate(1); // Scroll date forward
+            JournalController.GetAllEntriesByDate(DateTimeSetting);
+            // JournalController.FilteredLogs.Print();
+            TableViewSourceModel model = new TableViewSourceModel(JournalController.FilteredLogs);
+            logEntryTable.Source = model;
+            logEntryTable.ReloadData();
         }
 
         partial void date_backward_tap(UIBarButtonItem sender)
         {
             ScrollDate(-1); // Scroll date backward
+            JournalController.GetAllEntriesByDate(DateTimeSetting);
+            // JournalController.FilteredLogs.Print();
+            TableViewSourceModel model = new TableViewSourceModel(JournalController.FilteredLogs);
+            logEntryTable.Source = model;
+            logEntryTable.ReloadData();
+           
         }
     }
 

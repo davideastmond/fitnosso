@@ -2,6 +2,7 @@
 using Foundation;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization.Formatters;
+using UIKit;
 namespace fitnosso
 {
     /* This is the user who owns the fitness journal */
@@ -13,6 +14,11 @@ namespace fitnosso
         private int BMR_Gender_value_Male = 5;
         private int BMR_Gender_value_Female = -161;
 
+        public UIImage Photo
+        {
+            // Holds the user profile image
+            get; set;
+        }
         public int Age
         {
             get

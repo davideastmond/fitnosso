@@ -94,11 +94,13 @@
     <Folder Include="Resources\" />
     <Folder Include="Classes\" />
     <Folder Include="Protocols\" />
+    <Folder Include="ViewControllers\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
     <InterfaceDefinition Include="Main.storyboard" />
     <InterfaceDefinition Include="setupViewController.xib" />
+    <InterfaceDefinition Include="UserProfileViewController.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -108,18 +110,10 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="ViewController.cs" />
-    <Compile Include="ViewController.designer.cs">
-      <DependentUpon>ViewController.cs</DependentUpon>
-    </Compile>
     <Compile Include="Classes\User.cs" />
     <Compile Include="Classes\LogEntry.cs" />
     <Compile Include="Classes\Exercise.cs" />
     <Compile Include="Classes\FitnessJournal.cs" />
-    <Compile Include="setupViewController.cs" />
-    <Compile Include="setupViewController.designer.cs">
-      <DependentUpon>setupViewController.cs</DependentUpon>
-    </Compile>
     <Compile Include="Protocols\UserRegistrationResultProtocol.cs" />
     <Compile Include="Protocols\PickerViewModel.cs" />
     <Compile Include="Classes\ListPopulator.cs" />
@@ -132,6 +126,18 @@
       <DependentUpon>LogEntryViewCell.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\ExtensionMethods.cs" />
+    <Compile Include="ViewControllers\setupViewController.cs" />
+    <Compile Include="ViewControllers\setupViewController.designer.cs">
+      <DependentUpon>setupViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewControllers\UserProfileViewController.designer.cs">
+      <DependentUpon>UserProfileViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewControllers\ViewController.cs" />
+    <Compile Include="ViewControllers\ViewController.designer.cs">
+      <DependentUpon>ViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewControllers\UserProfileViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="exercises.txt" />

@@ -30,5 +30,6 @@ namespace fitnosso
     public struct RegistrationReturnData
     {
         public bool Successful;
+
     }
 }

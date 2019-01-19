@@ -9,7 +9,11 @@ namespace fitnosso
     public static class JournalController
     {
         // This is a static class used for common journal operations
-        public static FitnessJournal Pull()
+        public static FitnessJournal CurrentJournal;
+        public static List<LogEntry> FilteredLogs = new List<LogEntry>();
+        public static bool IsValidJournal;
+
+        public static void Pull()
         {
             // Retrieves / de-serializes the journal object
 
@@ -20,17 +24,18 @@ namespace fitnosso
             try
             {
                 returnJournal = (FitnessJournal) bf.Deserialize(fStream);
-                return returnJournal;
+                CurrentJournal = returnJournal;
+                IsValidJournal = true;
 
             } catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Journal Controller, pull request problem: " + e.Message);
+                IsValidJournal = false;
             }
 
-            return null;
         }
 
-        public static void Save(FitnessJournal jData)
+        public static void Save()
         {
             // Saves and backs up
 
@@ -58,8 +63,9 @@ namespace fitnosso
 
             try
             {
-                bF.Serialize(fStream, jData);
+                bF.Serialize(fStream, CurrentJournal);
                 Console.WriteLine("Journal file serialized and saved");
+
             }
             catch (Exception e)
             {
@@ -67,16 +73,51 @@ namespace fitnosso
             }
 
         }
-        public static List<LogEntry> GetAllEntriesByDate (DateTime d1)
+        public static void SaveNew(FitnessJournal new_data)
+        {
+            // Specifies new data to save to file
+            if (File.Exists(DataFiles.journalDataFile))
+            {
+                // Check to see if the backup exists
+
+                if (File.Exists(DataFiles.journalBackUpDataFile))
+                {
+                    // Delete the backup
+                    File.Delete(DataFiles.journalBackUpDataFile);
+                }
+
+                // Backup the main file
+                File.Copy(DataFiles.journalDataFile, DataFiles.journalBackUpDataFile);
+                // Delete the journal file and prepare to write a new one
+                File.Delete(DataFiles.journalDataFile);
+            }
+
+            // Write the fitness journal data to file
+            FileStream fStream = new FileStream(DataFiles.journalDataFile, FileMode.OpenOrCreate);
+            BinaryFormatter bF = new BinaryFormatter();
+
+            try
+            {
+                bF.Serialize(fStream, new_data);
+                Console.WriteLine("Journal file serialized and saved");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public static void GetAllEntriesByDate (DateTime d1)
         {
             /* This returns all the entries that have the EntryDate = d1*/
             List<LogEntry> returnList = new List<LogEntry>();
 
             // Pull a recent copy of the journal
-            FitnessJournal J = Pull();
+           
 
             // Cycle through the log entry and add those w/ matching dates to return list
-            foreach (LogEntry log in J.Logs)
+            foreach (LogEntry log in CurrentJournal.Logs)
             {
                 if (log.EntryDate.Day == d1.Day && log.EntryDate.Month == d1.Month && log.EntryDate.Year == d1.Year)
                 {
@@ -84,20 +125,20 @@ namespace fitnosso
                 }
 
             }
-            return returnList;
+            FilteredLogs = returnList;
         }
         public static LogEntry GetEntryByID(string IDno)
         {
             /* Retrieves a single log entry by the unique ID provided. Returns null if no entry found
             */
-            FitnessJournal pulledEntry = Pull();
+
             // Ensure it's not null
 
             // Ensure IDNo parameter is all uppper case
             IDno = IDno.ToUpper();
-            if (pulledEntry != null)
+            if (CurrentJournal != null)
             {
-                foreach (LogEntry j in pulledEntry.Logs)
+                foreach (LogEntry j in CurrentJournal.Logs)
                 {
                     
                     if (j.EntryID == IDno)
@@ -116,7 +157,7 @@ namespace fitnosso
                 File.Delete(DataFiles.journalDataFile);
           }
         }
-        public static List<LogEntry> TestReturnListOfRandomLogEntries(int count)
+        public static void TestReturnListOfRandomLogEntries(int count)
         {
             // A Test Function that generates #count of random log entries
             List<LogEntry> returnList = new List<LogEntry>();
@@ -145,7 +186,8 @@ namespace fitnosso
                     returnList.Add(el);
                 }
             }
-            return returnList;
+            CurrentJournal.Logs = returnList;
+           
         }
 
     }

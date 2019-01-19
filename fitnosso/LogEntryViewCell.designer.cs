@@ -20,6 +20,10 @@ namespace fitnosso
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel lblEx_Food { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel lblLogEntryID { get; set; }
 
         [Outlet]
@@ -31,6 +35,11 @@ namespace fitnosso
             if (lblcKals != null) {
                 lblcKals.Dispose ();
                 lblcKals = null;
+            }
+
+            if (lblEx_Food != null) {
+                lblEx_Food.Dispose ();
+                lblEx_Food = null;
             }
 
             if (lblLogEntryID != null) {
