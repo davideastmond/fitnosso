@@ -14,11 +14,12 @@ namespace fitnosso
         private int BMR_Gender_value_Male = 5;
         private int BMR_Gender_value_Female = -161;
 
+        /*
         public UIImage Photo
         {
             // Holds the user profile image
             get; set;
-        }
+        } */
         public int Age
         {
             get

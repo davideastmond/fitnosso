@@ -184,6 +184,7 @@ namespace fitnosso
             FitnessJournal journalObject = new FitnessJournal(NewJournalUser);
 
             JournalController.SaveNew(journalObject);
+            //JournalController.Pull();
             // Serialize and write to file
 
             // Send a message via the delegate

@@ -3,6 +3,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.IO;
 using System.Collections.Generic;
+using ImageIO;
+
 
 namespace fitnosso
 {
@@ -12,6 +14,7 @@ namespace fitnosso
         public static FitnessJournal CurrentJournal;
         public static List<LogEntry> FilteredLogs = new List<LogEntry>();
         public static bool IsValidJournal;
+        
 
         public static void Pull()
         {
@@ -23,9 +26,12 @@ namespace fitnosso
             FitnessJournal returnJournal;
             try
             {
+
                 returnJournal = (FitnessJournal) bf.Deserialize(fStream);
                 CurrentJournal = returnJournal;
                 IsValidJournal = true;
+                
+
 
             } catch (Exception e)
             {
@@ -65,6 +71,7 @@ namespace fitnosso
             {
                 bF.Serialize(fStream, CurrentJournal);
                 Console.WriteLine("Journal file serialized and saved");
+
 
             }
             catch (Exception e)
@@ -106,6 +113,7 @@ namespace fitnosso
             {
                 Console.WriteLine(e.Message);
             }
+            fStream.Dispose();
         }
 
         public static void GetAllEntriesByDate (DateTime d1)

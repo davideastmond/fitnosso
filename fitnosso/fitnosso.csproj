@@ -138,6 +138,7 @@
       <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewControllers\UserProfileViewController.cs" />
+    <Compile Include="Classes\FolderPaths.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="exercises.txt" />

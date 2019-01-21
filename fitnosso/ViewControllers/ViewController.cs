@@ -51,13 +51,18 @@ namespace fitnosso
             if (JournalController.CurrentJournal == null)
             {
                 this.PerformSegue("showSetupJournal", this);
+
             }
             else
             {
+                /*
                 JournalController.TestReturnListOfRandomLogEntries(12);
                 JournalController.Save();
+                */
                 TableViewSourceModel model = new TableViewSourceModel(JournalController.FilteredLogs);
                 logEntryTable.Source = model;
+                UIImage img = new UIImage();
+
             }
         }
 
@@ -66,6 +71,10 @@ namespace fitnosso
         {
             base.DidReceiveMemoryWarning();
             // Release any cached data, images, etc that aren't in use.
+
+
+
+            
         }
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
         {
@@ -94,8 +103,6 @@ namespace fitnosso
             }
             else
             {
-
-
                 logEntryTable.Hidden = false;
                 cmdCreateNewJournal.Hidden = true;
                 btn_new_log.Enabled = true;
@@ -122,7 +129,7 @@ namespace fitnosso
             {
                 Console.WriteLine("Registration was successful. Load the database");
                 // Refresh and pull
-                JournalController.Pull();
+                //JournalController.Pull();
                 // pop
                 this.NavigationController.PopViewController(true);
                 GlobalToast.Toast.ShowToast("Journal Created");
