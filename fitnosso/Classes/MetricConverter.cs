@@ -18,6 +18,9 @@ namespace fitnosso
             }
         }
     }
+    /// <summary>
+    /// A helper class that provides conversions of heights and weights between metric and imperial
+    /// </summary>
     public static class MetricConverter
     {
         // Easy converter that converts  lbs <-> kilos

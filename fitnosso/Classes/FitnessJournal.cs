@@ -7,7 +7,9 @@ using System.IO;
 
 namespace fitnosso
 {
-    // The actual journal, which is owned by a User and contains a list of LogEntries
+    /// <summary>
+    /// A FitnessJournal which is owned by a User and contains a list of LogEntries. It keeps track of food and exercise, calories, stats about the user etc.
+    /// </summary>
     [Serializable]
     public class FitnessJournal
     {

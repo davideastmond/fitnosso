@@ -79,7 +79,7 @@
                                 <items>
                                     <barButtonItem title="Profile" id="15968">
                                         <connections>
-                                            <segue id="16028" destination="15972" kind="show"/>
+                                            <segue id="16028" destination="15972" kind="show" identifier="segue_UserProfile"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -340,15 +340,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Height" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="16495" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
-                                <rect key="frame" x="16" y="288" width="77" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Height (cm):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="16495" translatesAutoresizingMaskIntoConstraints="NO">
+                                <rect key="frame" x="16" y="288" width="113" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17" weight="semibold"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <constraints>
+                                    <constraint id="20311" firstAttribute="width" constant="113"/>
+                                </constraints>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weight" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="16496" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
-                                <rect key="frame" x="16" y="323" width="68" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weight (kg):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="16496" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="16" y="323" width="124" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17" weight="semibold"/>
                                 <nil key="textColor"/>
@@ -361,9 +363,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="16521" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" text="BMR">
-                                <rect key="frame" x="165" y="393" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="16521" translatesAutoresizingMaskIntoConstraints="NO" text="BMR" misplaced="YES">
+                                <rect key="frame" x="137" y="393" width="100" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -382,12 +383,29 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="19065" translatesAutoresizingMaskIntoConstraints="NO">
+                                <rect key="frame" x="40" y="605" width="295" height="30"/>
+                                <state key="normal" title="Delete &amp; Reset">
+                                    <color key="titleColor" colorSpace="calibratedRGB" red="1" green="0.14901960784313725" blue="0" alpha="1"/>
+                                </state>
+                                <constraints>
+                                    <constraint id="19069" firstAttribute="width" constant="295"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="delete_reset_journal_tap:" destination="15972" id="19070" eventType="touchUpInside"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <connections>
-                            <outletCollection id="16525" property="gestureRecognizers" destination="16524" appends="YES"/>
-                        </connections>
+                        <constraints>
+                            <constraint id="19067" firstItem="15973" firstAttribute="trailing" secondItem="19065" secondAttribute="trailing" constant="40"/>
+                            <constraint id="19068" firstItem="15973" firstAttribute="bottom" secondItem="19065" secondAttribute="bottom" constant="32"/>
+                            <constraint id="20309" firstItem="16495" firstAttribute="leading" secondItem="15973" secondAttribute="leading" constant="16"/>
+                            <constraint id="20310" firstItem="16495" firstAttribute="top" secondItem="15973" secondAttribute="top" constant="288"/>
+                            <constraint id="20312" firstItem="16521" firstAttribute="centerX" secondItem="15973" secondAttribute="centerX"/>
+                            <constraint id="20313" firstItem="16521" firstAttribute="leading" secondItem="16495" secondAttribute="trailing" constant="8"/>
+                            <constraint id="20314" firstItem="15973" firstAttribute="bottom" secondItem="16521" secondAttribute="bottom" constant="253"/>
+                        </constraints>
                     </view>
-                    <navigationItem title="User Profile" id="16034" key="navigationItem"/>
                     <connections>
                         <outlet property="imgUserImage" destination="16035" id="name-outlet-16035"/>
                         <outlet property="lblUserName" destination="16491" id="name-outlet-16491"/>
@@ -395,15 +413,17 @@
                         <outlet property="lblUserBMR" destination="16521" id="name-outlet-16521"/>
                         <outlet property="txtEdit_Height" destination="16522" id="name-outlet-16522"/>
                         <outlet property="txtEdit_Weight" destination="16523" id="name-outlet-16523"/>
-                        <outlet property="profileTapGestureRec" destination="16524" id="name-outlet-16524"/>
+                        <outlet property="cmdSaveProfileChanges" destination="18776" id="name-outlet-18776"/>
+                        <outlet property="lblUserAge" destination="16492" id="name-outlet-16492"/>
+                        <outlet property="lblHeightCaption" destination="16495" id="name-outlet-16495"/>
+                        <outlet property="lblWeightCaption" destination="16496" id="name-outlet-16496"/>
+                        <outlet property="cmdDeleteReset" destination="19065" id="name-outlet-19065"/>
                     </connections>
+                    <navigationItem title="Title" id="18775" key="navigationItem">
+                        <barButtonItem key="rightBarButtonItem" title="Update" id="18776"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="15974" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="16524">
-                    <connections>
-                        <action selector="photo_gesture_tap:" destination="15972" id="16526"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="758" y="-434"/>
         </scene>

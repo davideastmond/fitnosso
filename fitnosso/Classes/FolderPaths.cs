@@ -2,6 +2,9 @@
 using System.IO;
 namespace fitnosso
 {
+    /// <summary>
+    /// Static class that supplies a quick reference to data file paths
+    /// </summary>
     public static class DataFiles
     {
         // This is where we should check if there is a saved FitnessJournal on disk. If not, user needs to create one

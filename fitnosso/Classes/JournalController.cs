@@ -8,17 +8,22 @@ using ImageIO;
 
 namespace fitnosso
 {
+    /// <summary>
+    /// A static method
+    /// </summary>
     public static class JournalController
     {
         // This is a static class used for common journal operations
         public static FitnessJournal CurrentJournal;
         public static List<LogEntry> FilteredLogs = new List<LogEntry>();
         public static bool IsValidJournal;
-        
 
+        /// <summary>
+        /// Retrieves / de-serializes the journal object and assigns the CurrentJournal property, creating a FitnessJournal reference
+        /// </summary>
         public static void Pull()
         {
-            // Retrieves / de-serializes the journal object
+            // 
 
             BinaryFormatter bf = new BinaryFormatter();
             FileStream fStream = new FileStream(DataFiles.journalDataFile, FileMode.Open, FileAccess.Read);
@@ -41,10 +46,11 @@ namespace fitnosso
 
         }
 
+        /// <summary>
+        /// Saves and automatically backs-up the journal
+        /// </summary>
         public static void Save()
         {
-            // Saves and backs up
-
             // Get any saved journal, back it up
 
             if (File.Exists(DataFiles.journalDataFile))
@@ -80,9 +86,13 @@ namespace fitnosso
             }
 
         }
+        /// <summary>
+        /// This method saves replaces the existing JournalFile with the data provided in the parameter
+        /// </summary>
+        /// <param name="new_data"> FitnessJournal data that will completely replace the existing fitness journal data </param>
         public static void SaveNew(FitnessJournal new_data)
         {
-            // Specifies new data to save to file
+
             if (File.Exists(DataFiles.journalDataFile))
             {
                 // Check to see if the backup exists
@@ -116,9 +126,13 @@ namespace fitnosso
             fStream.Dispose();
         }
 
+        /// <summary>
+        /// This returns all the entries that match the DateTime argument specified 
+        /// </summary>
+        /// <param name="d1"> Specify a time to match against </param>
         public static void GetAllEntriesByDate (DateTime d1)
         {
-            /* This returns all the entries that have the EntryDate = d1*/
+
             List<LogEntry> returnList = new List<LogEntry>();
 
             // Pull a recent copy of the journal
@@ -135,14 +149,13 @@ namespace fitnosso
             }
             FilteredLogs = returnList;
         }
+
+        /// <summary>
+        /// Retrieves a single log entry by the unique ID provided. Returns null if no entry found
+        /// </summary>
         public static LogEntry GetEntryByID(string IDno)
         {
-            /* Retrieves a single log entry by the unique ID provided. Returns null if no entry found
-            */
 
-            // Ensure it's not null
-
-            // Ensure IDNo parameter is all uppper case
             IDno = IDno.ToUpper();
             if (CurrentJournal != null)
             {
@@ -157,14 +170,22 @@ namespace fitnosso
             }
             return null;
         }
+
+        /// <summary>
+        /// Deletes the FitnessJournal information from the device. It must be re-created manually.
+        /// </summary>
         public static void Reset()
         {
-            // Deletes / resets the journal
+
             if (File.Exists(DataFiles.journalDataFile))
             {
                 File.Delete(DataFiles.journalDataFile);
           }
         }
+        /// <summary>
+        /// A test method that the returns a list of random log entries.
+        /// </summary>
+        /// <param name="count"> The number of rnadom log entries to create and return.</param>
         public static void TestReturnListOfRandomLogEntries(int count)
         {
             // A Test Function that generates #count of random log entries

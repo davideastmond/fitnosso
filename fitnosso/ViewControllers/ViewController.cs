@@ -9,6 +9,7 @@ using System.Collections.Generic;
 namespace fitnosso
 {
     public delegate void RegistrationReceived(object sender, RegistrationReturnData data);
+    public delegate void JournalDeleted(object sender, EventArgs e);
     public partial class ViewController : UIViewController
     {
         DateTime DateTimeSetting = DateTime.Now;
@@ -33,7 +34,8 @@ namespace fitnosso
                 // Segue to a registration screen
                 // Create a delegate object
 
-                this.PerformSegue("showSetupJournal", this);
+                // this.PerformSegue("showSetupJournal", this);
+                setMainUserInterface();
             } else
             {
                 // Deserialize and pass information
@@ -50,8 +52,8 @@ namespace fitnosso
 
             if (JournalController.CurrentJournal == null)
             {
-                this.PerformSegue("showSetupJournal", this);
-
+                //this.PerformSegue("showSetupJournal", this);
+                setMainUserInterface();
             }
             else
             {
@@ -85,31 +87,29 @@ namespace fitnosso
             {
                 setupViewController setScreen = segue.DestinationViewController as setupViewController; // Create a new instance of the setup screen
                 setScreen.delegate_data.OnReceivedRegistrationData += Delegate_Data_OnReceivedRegistrationData;
+            } else if (segue.Identifier == "segue_UserProfile")
+            {
+                // User profile segue
+                UserProfileViewController profileViewController = segue.DestinationViewController as UserProfileViewController; // Cast
+                profileViewController.OnJournalDeleted += ProfileViewController_OnJournalDeleted; // Create a watcher
             }
         }
+
+        void ProfileViewController_OnJournalDeleted(object sender, EventArgs e)
+        {
+            // Pop the view controller and reset the user interface
+            Console.WriteLine("Received Journal Deleted");
+            NavigationController.PopViewController(true);
+            setMainUserInterface();
+            GlobalToast.Toast.ShowToast("Journal deleted.");
+        }
+
+
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
+            setMainUserInterface();
 
-            if (!JournalController.IsValidJournal)
-            {
-                Console.WriteLine("Please create a new Journal");
-                logEntryTable.Hidden = true;
-                cmdCreateNewJournal.Hidden = false;
-                btn_new_log.Enabled = false;
-                btnShowProfile.Enabled = false;
-                btn_date_forward.Enabled = false;
-                btn_date_backward.Enabled = false;
-            }
-            else
-            {
-                logEntryTable.Hidden = false;
-                cmdCreateNewJournal.Hidden = true;
-                btn_new_log.Enabled = true;
-                btnShowProfile.Enabled = true;
-                btn_date_forward.Enabled = true;
-                btn_date_backward.Enabled = true;
-            }
 
         }
 
@@ -129,13 +129,35 @@ namespace fitnosso
             {
                 Console.WriteLine("Registration was successful. Load the database");
                 // Refresh and pull
-                //JournalController.Pull();
+                JournalController.Pull();
                 // pop
                 this.NavigationController.PopViewController(true);
                 GlobalToast.Toast.ShowToast("Journal Created");
 
 
 
+            }
+        }
+        void setMainUserInterface()
+        {
+            if (!JournalController.IsValidJournal)
+            {
+                Console.WriteLine("Please create a new Journal");
+                logEntryTable.Hidden = true;
+                cmdCreateNewJournal.Hidden = false;
+                btn_new_log.Enabled = false;
+                btnShowProfile.Enabled = false;
+                btn_date_forward.Enabled = false;
+                btn_date_backward.Enabled = false;
+            }
+            else
+            {
+                logEntryTable.Hidden = false;
+                cmdCreateNewJournal.Hidden = true;
+                btn_new_log.Enabled = true;
+                btnShowProfile.Enabled = true;
+                btn_date_forward.Enabled = true;
+                btn_date_backward.Enabled = true;
             }
         }
         void ScrollDate (int dateDirection)

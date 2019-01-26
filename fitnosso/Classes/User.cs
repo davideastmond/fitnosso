@@ -3,6 +3,7 @@ using Foundation;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization.Formatters;
 using UIKit;
+
 namespace fitnosso
 {
     /* This is the user who owns the fitness journal */

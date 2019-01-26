@@ -4,8 +4,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace fitnosso
 {
     public enum LogType { IN, OUT}
-    /* This class represents an individual log entry */
+
     [Serializable]
+    /// <summary>
+    /// Abstract class that serves as the template for one of two LogEntry Types -- fitness and food.
+    /// </summary>
     public abstract class LogEntry
     {
         // Holds the date the log entry was made, not necessarily the date of the exercise
@@ -28,6 +31,9 @@ namespace fitnosso
             _EntryID = RandomString.Generate(IDLength);
         }
     }
+    /// <summary>
+    /// Food log entry.
+    /// </summary>
     [Serializable]
     public class FoodLogEntry : LogEntry
     {
@@ -52,6 +58,9 @@ namespace fitnosso
             }
         }
     }
+    /// <summary>
+    /// Exercise log entry.
+    /// </summary>
     [Serializable]
     public class ExerciseLogEntry : LogEntry
     {

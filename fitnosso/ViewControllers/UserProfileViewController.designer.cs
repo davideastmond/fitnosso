@@ -16,7 +16,23 @@ namespace fitnosso
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton cmdDeleteReset { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIBarButtonItem cmdSaveProfileChanges { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIImageView imgUserImage { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel lblHeightCaption { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel lblUserAge { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -32,7 +48,7 @@ namespace fitnosso
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITapGestureRecognizer profileTapGestureRec { get; set; }
+        UIKit.UILabel lblWeightCaption { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -42,15 +58,35 @@ namespace fitnosso
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITextField txtEdit_Weight { get; set; }
 
-        [Action ("photo_gesture_tap:")]
+        [Action ("delete_reset_journal_tap:")]
         [GeneratedCode ("iOS Designer", "1.0")]
-        partial void photo_gesture_tap (UIKit.UITapGestureRecognizer sender);
+        partial void delete_reset_journal_tap (UIKit.UIButton sender);
 
         void ReleaseDesignerOutlets ()
         {
+            if (cmdDeleteReset != null) {
+                cmdDeleteReset.Dispose ();
+                cmdDeleteReset = null;
+            }
+
+            if (cmdSaveProfileChanges != null) {
+                cmdSaveProfileChanges.Dispose ();
+                cmdSaveProfileChanges = null;
+            }
+
             if (imgUserImage != null) {
                 imgUserImage.Dispose ();
                 imgUserImage = null;
+            }
+
+            if (lblHeightCaption != null) {
+                lblHeightCaption.Dispose ();
+                lblHeightCaption = null;
+            }
+
+            if (lblUserAge != null) {
+                lblUserAge.Dispose ();
+                lblUserAge = null;
             }
 
             if (lblUserBMR != null) {
@@ -68,9 +104,9 @@ namespace fitnosso
                 lblUserName = null;
             }
 
-            if (profileTapGestureRec != null) {
-                profileTapGestureRec.Dispose ();
-                profileTapGestureRec = null;
+            if (lblWeightCaption != null) {
+                lblWeightCaption.Dispose ();
+                lblWeightCaption = null;
             }
 
             if (txtEdit_Height != null) {
