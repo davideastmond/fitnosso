@@ -19,7 +19,12 @@ namespace fitnosso
         {
             Console.WriteLine("Photo tapped");
             picker = new UIImagePickerController();
-
+            picker.SourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+            
+            picker.MediaTypes = UIImagePickerController.AvailableMediaTypes(UIImagePickerControllerSourceType.PhotoLibrary);
+            picker.FinishedPickingMedia += Picker_FinishedPickingMedia;
+            picker.Canceled += Picker_Canceled;
+            PresentViewController(picker, true, null); // Present the view controller
         }
         public override void ViewDidLoad()
         {
@@ -107,6 +112,34 @@ namespace fitnosso
         void UserProfileViewController_OnJournalDeleted(object sender, EventArgs e)
         {
             // Nothing
+            
+        }
+
+        void Picker_FinishedPickingMedia(object sender, UIImagePickerMediaPickedEventArgs e)
+        {
+            // Delegate event
+            bool isImage = false;
+            switch(e.Info[UIImagePickerController.MediaType].ToString())
+            {
+                case "public.image":
+                    isImage = true;
+                    break;
+                case "public.video":
+                    break;
+            }
+
+            if (isImage)
+            {
+                UIImage originalImage = e.Info[UIImagePickerController.OriginalImage] as UIImage;
+                imgUserImage.Image = originalImage; // Set the user image
+            }
+            picker.DismissModalViewController(true);
+        }
+
+        void Picker_Canceled(object sender, EventArgs e)
+        {
+            // Event implementation - dismiss
+            picker.DismissModalViewController(true);
         }
 
     }

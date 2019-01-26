@@ -2,25 +2,31 @@
 using Foundation;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization.Formatters;
+using System.Runtime.Serialization;
 using UIKit;
 
 namespace fitnosso
 {
     /* This is the user who owns the fitness journal */
     public enum Sex {Male, Female, Other}
-    [Serializable]
-    public class User
+
+    
+    public class User : ISerializable
     {
         public string Name;
         private int BMR_Gender_value_Male = 5;
         private int BMR_Gender_value_Female = -161;
 
-        /*
         public UIImage Photo
         {
             // Holds the user profile image
             get; set;
-        } */
+        }
+        public string UIImagePath
+        {
+            // Contains a path to the user's profile image
+            get; set;
+        }
         public int Age
         {
             get
@@ -123,6 +129,27 @@ namespace fitnosso
             SexGender = pSex;
             _UserID = RandomString.Generate();    
         }
+        public User(SerializationInfo info, StreamingContext context)
+        {
+            // Serialization constructor
+
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            // Serialization constructor
+            info.AddValue("Name", this.Name, typeof(string));
+            info.AddValue("UIImagePath", this.UIImagePath, typeof(string));
+            info.AddValue("Age", this.Age, typeof(int));
+            info.AddValue("DOB", this.DateOfBirth, typeof(DateTime));
+            info.AddValue("SexGender", this.SexGender, typeof(Sex));
+            info.AddValue("ID", this.ID, typeof(string));
+            info.AddValue("BMR", this.BasalMetabolicRate, typeof(double));
+            info.AddValue("iHeight", this.ImperialHeight, typeof(double));
+            info.AddValue("iWeight", this.ImperialWeight, typeof(double));
+            info.AddValue("mHeight", this.MetricHeight, typeof(double));
+            info.AddValue("mWeight", this.MetricWeight, typeof(double));
+
+        }
 
         public void SetMetricWeight (double value)
         {
@@ -146,5 +173,6 @@ namespace fitnosso
             _ImperialHeight = value;
             _MetricHeight = MetricConverter.ToCentimeters(value);
         }
+
     }
 }
