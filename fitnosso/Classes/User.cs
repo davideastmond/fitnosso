@@ -10,7 +10,7 @@ namespace fitnosso
     /* This is the user who owns the fitness journal */
     public enum Sex {Male, Female, Other}
 
-    
+    [Serializable]
     public class User : ISerializable
     {
         public string Name;
@@ -132,18 +132,35 @@ namespace fitnosso
         public User(SerializationInfo info, StreamingContext context)
         {
             // Serialization constructor
+            if (info == null)
+            {
+                throw new ArgumentException("Info");
+
+            }
+            this.Name = (string)info.GetValue("Name", typeof(string));
+            this.UIImagePath = (string)info.GetValue("UIImagePath", typeof(string));
+
+            this.DOB = (DateTime) info.GetValue("DOB", typeof(DateTime));
+            this.SexGender = (Sex) info.GetValue("SexGender", typeof(Sex));
+            this._UserID = (string) info.GetValue("ID", typeof(string));
+
+
+            this._ImperialHeight = (double) info.GetValue("iHeight", typeof(double));
+            this._ImperialWeight = (double) info.GetValue("iWeight",  typeof(double));
+            this._MetricHeight = (double) info.GetValue("mHeight", typeof(double));
+            this._MetricWeight = (double) info.GetValue("mWeight",  typeof(double));
 
         }
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            // Serialization constructor
+            // Serialization information as per ISerializable
             info.AddValue("Name", this.Name, typeof(string));
             info.AddValue("UIImagePath", this.UIImagePath, typeof(string));
-            info.AddValue("Age", this.Age, typeof(int));
+
             info.AddValue("DOB", this.DateOfBirth, typeof(DateTime));
             info.AddValue("SexGender", this.SexGender, typeof(Sex));
             info.AddValue("ID", this.ID, typeof(string));
-            info.AddValue("BMR", this.BasalMetabolicRate, typeof(double));
+
             info.AddValue("iHeight", this.ImperialHeight, typeof(double));
             info.AddValue("iWeight", this.ImperialWeight, typeof(double));
             info.AddValue("mHeight", this.MetricHeight, typeof(double));
